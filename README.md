@@ -2,9 +2,21 @@
 
 依赖于 KUAL 和 Python3 的 Kindle 插件，用于 WiFi 传书到 Kindle。
 
+基本原理是在 Kindle 上运行一个 HTTP Server，这样局域网内的电脑、手机等设备访问一个 `http://<kindle 的局域网 IP>:8000` 的地址，就可以打开一个可以上传电子书到 Kindle 的网页。
+
+## 运行效果
+
+Kindle 端插件运行效果：
+
+![](./screenshots/kindle-extension.png)
+
+电脑/手机端上传页面效果：
+
+![](./screenshots/page-to-upload.png)
+
 ## 安装方法
 
-该插件依赖于 KUAL 和 Python3，请确保之前已经正确安装它们。
+该插件依赖于 KUAL 和 Python3，请确保之前已经正确安装它们。它们的安装方法可以参考 <https://bookfere.com/post/311.html>。
 
 本插件安装方法：
 
