@@ -1,0 +1,37 @@
+{
+    "items": [
+        {
+            "name": "WiFi Transfer",
+            "priority": 0,
+            "items": [
+                {
+                    "name": "Start Server",
+                    "priority": 1,
+                    "action": "python3 ./main.py start",
+                    "exitmenu": false,
+                    "checked": false,
+                    "status": false,
+                    "internal": "status WiFi Transfer Server was started!"
+                },
+                {
+                    "name": "Stop Server",
+                    "priority": 2,
+                    "action": "python3 ./main.py stop",
+                    "exitmenu": false,
+                    "checked": false,
+                    "status": false,
+                    "internal": "status WiFi Transfer Server was stopped!"
+                },
+                {
+                    "name": "Show Status",
+                    "priority": 2,
+                    "action": "python3 ./main.py status",
+                    "exitmenu": false,
+                    "checked": false,
+                    "status": false,
+                    "internal": "status Show WiFi Transfer Server Status!"
+                }
+            ]
+        }
+    ]
+}
