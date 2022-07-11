@@ -12,7 +12,7 @@ Kindle 端插件运行效果：
 
 电脑/手机端上传页面效果：
 
-<img width="320px" src="./screenshots/page-to-upload.png"/>
+<img width="640px" src="./screenshots/page-to-upload.png"/>
 
 ## 安装方法
 
