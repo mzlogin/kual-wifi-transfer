@@ -8,11 +8,11 @@
 
 Kindle 端插件运行效果：
 
-![](./screenshots/kindle-extension.png)
+<img width="320px" src="./screenshots/kindle-extension.png"/>
 
 电脑/手机端上传页面效果：
 
-![](./screenshots/page-to-upload.png)
+<img width="320px" src="./screenshots/page-to-upload.png"/>
 
 ## 安装方法
 
