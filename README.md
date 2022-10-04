@@ -10,9 +10,13 @@ Kindle 端插件运行效果：
 
 <img width="320px" src="./screenshots/kindle-extension.png"/>
 
-电脑/手机端上传页面效果：
+电脑端上传页面效果：
 
 <img width="640px" src="./screenshots/page-to-upload.png"/>
+
+手机端上传页面效果：
+
+<img width="320px" src="./screenshots/page-to-upload-mobile.png"/>
 
 ## 安装方法
 

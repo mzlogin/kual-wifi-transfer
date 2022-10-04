@@ -138,49 +138,29 @@ class SimpleHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             raise
  
     def list_directory(self, path):
-        try:
-            list_dir = os.listdir(path)
-        except OSError:
-            self.send_error(HTTPStatus.NOT_FOUND, "No permission to list_dir directory")
-            return None
-        list_dir.sort(key=lambda a: a.lower())
-        r = []
-        try:
-            display_path = urllib.parse.unquote(self.path, errors='surrogatepass')
-        except UnicodeDecodeError:
-            display_path = urllib.parse.unquote(path)
-        display_path = html.escape(display_path, quote=False)
         enc = sys.getfilesystemencoding()
+
+        content = """
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>WiFi 传书</title>
+  </head>
+  <body style="text-align:center">
+    <h1>WiFi 传书</h1>
+    <form ENCTYPE="multipart/form-data" method="post">
+      <input name="file" type="file"/>
+      <input type="submit" value="上传"/>
+    </form>
+  </body>
+</html>
+        """
  
-        form = """
-            <h1>文件上传</h1>\n
-            <form ENCTYPE="multipart/form-data" method="post">\n
-                <input name="file" type="file"/>\n
-                <input type="submit" value="upload"/>\n
-            </form>\n"""
-        title = 'Directory listing for %s' % display_path
-        r.append('<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" '
-                 '"http://www.w3.org/TR/html4/strict.dtd">')
-        r.append('<html>\n<head>')
-        r.append('<meta http-equiv="Content-Type" '
-                 'content="text/html; charset=%s">' % enc)
-        r.append('<title>%s</title>\n</head>' % title)
-        r.append('<body>%s\n<h1>%s</h1>' % (form, title))
-        r.append('<hr>\n<ul>')
-        for name in list_dir:
-            fullname = os.path.join(path, name)
-            displayname = linkname = name
-            # Append / for directories or @ for symbolic links
-            if os.path.isdir(fullname):
-                displayname = name + "/"
-                linkname = name + "/"
-            if os.path.islink(fullname):
-                displayname = name + "@"
-                # Note: a link to a directory displays with @ and links with /
-            r.append('<li><a href="%s">%s</a></li>' % (urllib.parse.quote(linkname, errors='surrogatepass'),
-                                                       html.escape(displayname, quote=False)))
-        r.append('</ul>\n<hr>\n</body>\n</html>\n')
-        encoded = '\n'.join(r).encode(enc, 'surrogate escape')
+        encoded = content.encode(enc, 'surrogate escape')
         f = io.BytesIO()
         f.write(encoded)
         f.seek(0)
@@ -237,14 +217,15 @@ class SimpleHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             '"http://www.w3.org/TR/html4/strict.dtd">',
             '<html>\n<head>',
             '<meta http-equiv="Content-Type" content="text/html; charset=%s">' % enc,
-            '<title>%s</title>\n</head>' % "Upload Result Page",
-            '<body><h1>%s</h1>\n' % "Upload Result"
+            '<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">',
+            '<title>%s</title>\n</head>' % "上传结果",
+            '<body style="text-align:center"><h1>%s</h1>\n' % "上传结果"
         ]
         if r:
-            res.append('<p>SUCCESS: %s</p>\n' % info)
+            res.append('<p>成功: %s</p>\n' % info)
         else:
-            res.append('<p>FAILURE: %s</p>' % info)
-        res.append('<a href=\"%s\">back</a>' % self.headers['referer'])
+            res.append('<p>失败: %s</p>' % info)
+        res.append('<a href=\"%s\">返回</a>' % self.headers['referer'])
         res.append('</body></html>')
         encoded = '\n'.join(res).encode(enc, 'surrogate escape')
         f = io.BytesIO()
@@ -275,7 +256,7 @@ class SimpleHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
         if not fn:
             return False, "Can't find out file name..."
         # path = self.translate_path(self.path)
-        path = "/mnt/us/documents/"
+        path = default_directory
         fn = os.path.join(path, fn[0])
         line = self.rfile.readline()
         remain_bytes -= len(line)
