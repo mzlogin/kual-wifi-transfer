@@ -30,7 +30,9 @@ Kindle 端插件运行效果：
 
 ## 使用方法
 
-打开 KUAL，就可以在插件列表里看到「WiFi Transfer」菜单项了。
+1. 在 Kindle 上打开 KUAL，就可以在插件列表里看到「WiFi Transfer」菜单项了，点击「Start Server」，Kindle 上将显示 `Starting server at <ip:port>`；
+
+2. 在电脑或手机上访问第 1 步显示的 `<ip:port>`，选择电子书文件并上传。
 
 ## 适用机型
 
